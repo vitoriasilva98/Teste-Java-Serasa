@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.teste.java.serasa.controller.dto.PessoaDtoId;
 import com.teste.java.serasa.controller.dto.PessoaDtoTodos;
-import com.teste.java.serasa.controller.form.PessoaForm;
 import com.teste.java.serasa.model.ClassificacaoScore;
 import com.teste.java.serasa.model.Pessoa;
 import com.teste.java.serasa.repository.PessoaRepository;
@@ -17,12 +16,23 @@ import com.teste.java.serasa.repository.PessoaRepository;
 @Service
 public class PessoaService {
 
-	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	public PessoaService(PessoaRepository pessoaRepository) {
+		this.pessoaRepository = pessoaRepository;
+	}
 
 	public List<PessoaDtoTodos> todasAsPessoas() {
 		List<Pessoa> listPessoa = pessoaRepository.findAll();
-		return classicaoDeScore(listPessoa);
+		List<PessoaDtoTodos> pessoaDtoTodos = new ArrayList<>();
+		
+		for (Pessoa p : listPessoa) {
+			String descricao = ClassificacaoScore.classificao(p.getScore());
+			pessoaDtoTodos.add(new PessoaDtoTodos(p, descricao));
+		}
+
+		return pessoaDtoTodos;
 	}
 
 	public PessoaDtoId pesquisaPeloId(Long id) {
@@ -36,18 +46,8 @@ public class PessoaService {
 		}
 	}
 
-	public List<PessoaDtoTodos> classicaoDeScore(List<Pessoa> listPessoa) {
-		List<PessoaDtoTodos> pessoaDtoTodos = new ArrayList<>();
-		for (Pessoa p : listPessoa) {
-			String descricao = ClassificacaoScore.classificao(p.getScore());
-			pessoaDtoTodos.add(new PessoaDtoTodos(p, descricao));
-		}
 
-		return pessoaDtoTodos;
-	}
-
-	public void cadastrarPessoas(PessoaForm form) {
-		Pessoa pessoa = new Pessoa(form);
+	public void cadastrarPessoas(Pessoa pessoa) {
 		pessoaRepository.save(pessoa);
 	}
 

@@ -4,8 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import com.teste.java.serasa.controller.form.PessoaForm;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class Pessoa {
@@ -13,25 +17,46 @@ public class Pessoa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotBlank
+	@NotEmpty(message = "Informe o nome")
+	@Length(min = 3, max = 30)
 	private String nome;
+
+	@NotBlank
+	@NotEmpty(message = "Informe o ddd e o telefone")
+	@Length(min = 10, max = 13)
 	private String telefone;
+
+	@NotNull
+	@Range(min = 14, max = 120)
 	private Integer idade;
+
+	@NotBlank
+	@NotEmpty(message = "Informe o nome da cidade")
+	@Length(min = 5, max = 35)
 	private String cidade;
+
+	@NotBlank
+	@NotEmpty(message = "Informe a sigla do estado")
+	@Length(min = 2, max = 2)
 	private String estado;
+
+	@NotNull
+	@Range(min = 0, max = 1000)
 	private Integer score;
 
 	public Pessoa() {
 
 	}
 
-	public Pessoa(PessoaForm form) {
-		super();
-		this.nome = form.getNome();
-		this.telefone = form.getTelefone();
-		this.idade = form.getIdade();
-		this.cidade = form.getCidade();
-		this.estado = form.getEstado();
-		this.score = form.getScore();
+	public Pessoa(String nome, String telefone, Integer idade, String cidade, String estado, Integer score) {
+		this.nome = nome;
+		this.telefone = telefone;
+		this.idade = idade;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.score = score;
 	}
 
 	public Long getId() {

@@ -17,39 +17,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teste.java.serasa.controller.dto.PessoaDtoId;
 import com.teste.java.serasa.controller.dto.PessoaDtoTodos;
-import com.teste.java.serasa.controller.form.PessoaForm;
+import com.teste.java.serasa.model.Pessoa;
 import com.teste.java.serasa.service.PessoaService;
 
 @RestController
 @RequestMapping("/pessoas")
 public class PessoaController {
-	
+
 	@Autowired
 	private PessoaService pessoaService;
-	
+
 	@GetMapping
-	public ResponseEntity<List<PessoaDtoTodos>> todasAsPessoas(){
-		if(pessoaService.todasAsPessoas().isEmpty()) {
+	public ResponseEntity<List<PessoaDtoTodos>> todasAsPessoas() {
+		if (pessoaService.todasAsPessoas().isEmpty()) {
 			return ResponseEntity.noContent().build();
-		}else {
+		} else {
 			return ResponseEntity.ok(pessoaService.todasAsPessoas());
 		}
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<PessoaDtoId> pesquisaPeloId(@PathVariable("id") Long id) {
-		
-		if(Optional.ofNullable(pessoaService.pesquisaPeloId(id)).isEmpty()) {
+
+		if (Optional.ofNullable(pessoaService.pesquisaPeloId(id)).isEmpty()) {
 			return ResponseEntity.noContent().build();
-		}else {
+		} else {
 			return ResponseEntity.ok(pessoaService.pesquisaPeloId(id));
-		}		
+		}
 	}
-	
+
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Void>
-	cadastrarPessoa(@RequestBody @Valid PessoaForm form){
-		pessoaService.cadastrarPessoas(form);
+	public ResponseEntity<Void> cadastrarPessoa(@RequestBody @Valid Pessoa pessoa) {
+		pessoaService.cadastrarPessoas(pessoa);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
