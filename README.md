@@ -1,4 +1,4 @@
-# Teste Java - Serasa Expirian
+# Teste Java - Serasa Experian
 
 Objetivo: Criar um serviço do tipo API RESTful, para cadastro de pessoas com score 
 
