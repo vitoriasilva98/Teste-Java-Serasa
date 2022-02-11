@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,13 +41,11 @@ class PessoaServiceTest {
 
 	@Test
 	void deveriaRetornarAPessoaDoId() {
-
+		Pessoa pessoaId = new Pessoa(1L ,"Maria Antônia", "11 97896-7896", 35, "São Paulo", "SP", 500);
+		Mockito.when(pessoaRepository.findById(1l)).thenReturn(Optional.of(pessoaId));
+		assertEquals(1l, pessoaId.getId());
 	}
 
-	@Test
-	void deveriaRetornarNull() {
-
-	}
 
 	@Test
 	void deveriaRetornarOCadastroRealizado() {

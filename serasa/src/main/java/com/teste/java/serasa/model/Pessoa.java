@@ -50,6 +50,22 @@ public class Pessoa {
 
 	}
 
+	public Pessoa(Long id, @NotBlank @NotEmpty(message = "Informe o nome") @Length(min = 3, max = 30) String nome,
+			@NotBlank @NotEmpty(message = "Informe o ddd e o telefone") @Length(min = 10, max = 13) String telefone,
+			@NotNull @Range(min = 14, max = 120) Integer idade,
+			@NotBlank @NotEmpty(message = "Informe o nome da cidade") @Length(min = 5, max = 35) String cidade,
+			@NotBlank @NotEmpty(message = "Informe a sigla do estado") @Length(min = 2, max = 2) String estado,
+			@NotNull @Range(min = 0, max = 1000) Integer score) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.idade = idade;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.score = score;
+	}
+
 	public Pessoa(String nome, String telefone, Integer idade, String cidade, String estado, Integer score) {
 		this.nome = nome;
 		this.telefone = telefone;
